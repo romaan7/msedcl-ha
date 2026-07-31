@@ -9,16 +9,14 @@ pytest.importorskip("pytest_homeassistant_custom_component")
 
 
 @pytest.fixture(autouse=True)
-def auto_enable_custom_integrations(enable_custom_integrations):
-    """Allow loading custom_components/msedcl in the test hass."""
-    return
+async def auto_setup(recorder_mock, enable_custom_integrations):
+    """Recorder + custom-integration enablement for every test in this dir.
 
-
-@pytest.fixture(autouse=True)
-async def auto_recorder(recorder_mock):
-    """Set up the (in-memory) recorder before each test.
-
-    The manifest declares recorder as a dependency (statistics insertion), so
-    loading the integration in a test hass requires a live recorder instance.
+    Argument order is load-bearing: `recorder_mock` MUST resolve before
+    anything that instantiates `hass` (its `recorder_db_url` dependency
+    asserts hass isn't set up yet, because the DB URL has to be configured
+    before hass boots). `enable_custom_integrations` depends on `hass`, so it
+    comes second. The recorder itself is required because the manifest
+    declares it as a dependency (statistics insertion).
     """
     return

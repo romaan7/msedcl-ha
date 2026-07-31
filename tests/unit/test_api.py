@@ -59,7 +59,9 @@ class Recorder:
 
 
 @pytest.fixture
-async def api():
+async def api(socket_enabled):
+    # socket_enabled: pytest-homeassistant-custom-component (in CI) disables
+    # socket creation via pytest-socket; the local test server needs it back.
     recorder = Recorder()
     app = web.Application()
     app.router.add_route("*", "/{tail:.*}", recorder.handler)
@@ -132,7 +134,7 @@ async def test_503_is_retried_then_succeeds(api):
     assert len(rec.calls) == 2
 
 
-async def test_connection_errors_exhaust_to_plain_maha_error():
+async def test_connection_errors_exhaust_to_plain_maha_error(socket_enabled):
     # A port that nothing listens on -> connection refused on every attempt.
     probe = socket.socket()
     probe.bind(("127.0.0.1", 0))

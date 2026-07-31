@@ -1,4 +1,5 @@
 aiohttp
 pytest
 pytest-asyncio
+pytest-socket
 pytest-homeassistant-custom-component

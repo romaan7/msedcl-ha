@@ -1,0 +1,64 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "MSEDCL (Mahavitaran) account",
+        "description": "Enter your Mahavitaran app login and your 12-digit consumer number. Billing unit, AMISP code and smart-meter capability are discovered automatically.",
+        "data": {
+          "username": "Login",
+          "password": "Password",
+          "consumer_no": "Consumer number"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Update MSEDCL credentials",
+        "description": "MSEDCL rejected the stored credentials. Enter them again.",
+        "data": {
+          "username": "Login",
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "MSEDCL rejected the login or password",
+      "cannot_connect": "Could not reach the MSEDCL servers",
+      "invalid_consumer_no": "Consumer number must be 12 digits and known to MSEDCL",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "This consumer number is already configured",
+      "reauth_successful": "Credentials updated"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Polling intervals",
+        "description": "Smart-meter data is roughly 15 minutes old on MSEDCL's side; polling faster than 30 minutes gains nothing. The statistics interval controls how often the Energy Dashboard catches up.",
+        "data": {
+          "meter_scan_interval": "Smart-meter poll interval (minutes)",
+          "billing_scan_interval": "Billing poll interval (hours)",
+          "stats_scan_interval": "Energy Dashboard statistics refresh (hours)"
+        }
+      }
+    }
+  },
+  "issues": {
+    "api_drift": {
+      "title": "MSEDCL API may have changed",
+      "description": "The {coordinator} updates have failed with repeated server errors. This usually means MSEDCL changed their unofficial API (the same failure mode that broke the RecentBill endpoint), not that your credentials expired. Check for an integration update, or open an issue with diagnostics attached."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "meter_reading": { "name": "Meter reading" },
+      "mtd_consumption": { "name": "Month-to-date consumption" },
+      "max_demand": { "name": "Maximum demand" },
+      "current_balance": { "name": "Balance" },
+      "last_reading_time": { "name": "Last reading time" },
+      "meter_health": { "name": "Meter health" },
+      "latest_bill_amount": { "name": "Latest bill amount" },
+      "latest_bill_consumption": { "name": "Latest bill consumption" }
+    }
+  }
+}
